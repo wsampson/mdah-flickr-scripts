@@ -38,9 +38,10 @@ for single_id in photo_ids:								# iterate over id list
 	
 	for node in photo_tree.iter('title'):						# get title									
 		title = node.text
-	for node in photo_tree.iter('description'):					# get description											
+	for node in photo_tree.iter('description'):
+		description = node.text							# get description											
 	
-	set_title       = title.replace('TARGET_STRING', 'NEW_STRING')			# insert target and replacement values
-	set_description = description.replace('TARGET_STRING', 'NEW_STRING')				
+		set_title       = title.replace('TARGET_STRING', 'NEW_STRING')			# insert target and replacement values
+		set_description = description.replace('TARGET_STRING', 'NEW_STRING')				
 																											
 	flickr.photos_setMeta(api_key='API_KEY', photo_id=single_id, title=set_title, description=set_description)
