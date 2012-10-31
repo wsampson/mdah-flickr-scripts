@@ -1,10 +1,14 @@
-flickr-titan
+mdah-flickr-scripts
 ============
 
-Straightforward script to batch search-and-replace text in photos' titles and descriptions on Flickr. Photos are
+flickr-batch-replace.py batch searches-and-replaces text in photos' titles and descriptions on Flickr. Photos are
 selected by set ID.
 
-Edit flickr-titan.py and replace the ALL_CAPS variables with the relevant values for your account.
+Edit flickr-batch-replace.py and replace the ALL_CAPS variables with the relevant values for your account.
 
-Runs from command line, suggested Python 2.7.x or later. Requires python-flickrapi and ElementTree (latter is included
-in recent Python releases).
+flickr-writer.py handles the embedded metadata in MDAH tiff files to construct descriptive text for the a new set of images.
+Be sure to check output of the script before uncommenting last two lines to commit your changes.
+
+Edit flickr-writer.py and replace the ALL_CAPS variables with the relevant values for your account.
+
+Run from command line, suggested Python 2.7.x or later. Requires python-flickrapi and ElementTree.
