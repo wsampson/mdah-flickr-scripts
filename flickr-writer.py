@@ -47,10 +47,10 @@ for single_id in photo_ids:
 	photo_tree = ET.ElementTree(photo) 																							
 	
 	# get description texts. May need adjustment depending on photo batch. Some photos will not have embedded metadata in the tiffs, or may have that metadata in a different layout.				
-	for node in photo_tree.iter('description'):																		
-   
-  # find the descriptive text
-  sysid_start   = node.text.find('Sysid')
+	for node in photo_tree.iter('description'):
+		
+		# find the descriptive text
+		sysid_start   = node.text.find('Sysid')
 		description   = node.text[5:sysid_start]
 		description   = description.strip()
 
