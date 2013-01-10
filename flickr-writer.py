@@ -10,14 +10,15 @@ try:
 except ImportError:
     import xml.etree.ElementTree as ET
 
-api_key = 'API_KEY'
-api_secret = 'API_SECRET'
+mdah_api_key = 'API_KEY'
+mdah_api_secret = 'API_SECRET'
 
-collection_title = 'COLLECTION_NAME'
-collection_call  = 'CALL_NUMBER'
+mdah_photoset_id = 'SET_ID'
+collection_title = 'COLLECTION_TITLE'
+collection_call  = 'COLLECTION_CALL_NUMBER'
 
 # make flickr object
-flickr = flickrapi.FlickrAPI(api_key, api_secret)						 
+flickr = flickrapi.FlickrAPI(mdah_api_key, mdah_api_secret)						 
 
 # authorize user
 (token, frob) = flickr.get_token_part_one(perms='write')															
@@ -25,7 +26,7 @@ if not token: raw_input('Press ENTER after you authorized this program')
 flickr.get_token_part_two((token, frob))
 
 # grab a photoset by id
-photoset = flickr.photosets_getPhotos(api_key='API_KEY', photoset_id='SET_ID')
+photoset = flickr.photosets_getPhotos(api_key=mdah_api_key, photoset_id=mdah_photoset_id)
 
 # load XML response into elementtree object
 set_tree = ET.ElementTree(photoset)																										
@@ -40,10 +41,10 @@ for node in set_tree.iter('photo'):
 # iterate over id list	
 for single_id in photo_ids:																												
 
- # get each photo
-	photo = flickr.photos_getInfo(photo_id=single_id, api_key='API_KEY')				
+ 	# get each photo
+	photo = flickr.photos_getInfo(photo_id=single_id, api_key=mdah_api_key)				
 
- # load into elementtree object		
+ 	# load into elementtree object		
 	photo_tree = ET.ElementTree(photo) 																							
 	
 	# get description texts. May need adjustment depending on photo batch. Some photos will not have embedded metadata in the tiffs, or may have that metadata in a different layout.				
@@ -61,22 +62,21 @@ for single_id in photo_ids:
 	
 		print scan_text
 		
- # get the item's system id					
+ 	# get the item's system id					
 	for node in photo_tree.iter('title'):						
 		sysid_end = node.text.find('-')
 		sysid = node.text[0:sysid_end]
 					
 		new_description = '<b>Collection: </b>'  + collection_title + '\n' + '<b>Call number: </b>' + collection_call  + '\n' + '<b>System ID: </b>' + sysid + '.' + '\n' + '<a href="http://zed.mdah.state.ms.us/cgi-bin/koha/opac-detail.pl?biblionumber=' + sysid + '" rel="nofollow">Link to the catalog</a>\n\n' + description + '\n\n' + 'Please see our <a href="http://www.flickr.com/people/mississippi-dept-of-archives-and-history/">profile page</a> for information on ordering.' + '\n\n' + scan_text + '\n\n' + 'Credit:  Courtesy of the Mississippi Department of Archives and History'
-	
 		
-		### CLOSELY view the output of following line to make sure the two previous for loops have correctly grabbed and applied the title, sysid, etc.		
+		# CLOSELY view the output of following line to make sure the two previous for loops have correctly grabbed and applied the title, sysid, etc.		
 			
 		print '\n\n'		
 		print description + ' :' + new_description
 		print 'mdah:sysid=' + sysid
 		print '\n\n'
 		
-		### Uncomment *ONLY* when ready to commit changes
+		# Uncomment *ONLY* when ready to commit changes
 				
-		# flickr.photos_setMeta(api_key='API_KEY', photo_id=single_id, title=description, description=new_description)
-		# flickr.photos_setTags(api_key='API_KEY', photo_id=single_id, tags='mdah:sysid=' + sysid)
+		#flickr.photos_setMeta(api_key=mdah_api_key, photo_id=single_id, title=description, description=new_description)
+		#flickr.photos_setTags(api_key=mdah_api_key, photo_id=single_id, tags='ms-dept-archives-history mdah:sysid=' + sysid)
