@@ -1,6 +1,4 @@
-# http://stuvel.eu/media/flickrapi-docs/documentation/
-# http://eli.thegreenplace.net/2012/03/15/processing-xml-in-python-with-elementtree/
-# http://www.doughellmann.com/PyMOTW/xml/etree/ElementTree/parse.html
+# -*- coding: utf-8 -*-
 
 ## Write complete title and descriptions to photos by set.
 
